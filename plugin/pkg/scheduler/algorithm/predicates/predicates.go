@@ -108,9 +108,10 @@ type resourceRequest struct {
 func getResourceRequest(pod *api.Pod) resourceRequest {
 	result := resourceRequest{}
 	for ix := range pod.Spec.Containers {
-		limits := pod.Spec.Containers[ix].Resources.Limits
-		result.memory += limits.Memory().Value()
-		result.milliCPU += limits.Cpu().MilliValue()
+		requests := pod.Spec.Containers[ix].Resources.Requests
+		result.memory += requests.Memory().Value()
+		result.milliCPU += requests.Cpu().MilliValue()
+
 	}
 	return result
 }
